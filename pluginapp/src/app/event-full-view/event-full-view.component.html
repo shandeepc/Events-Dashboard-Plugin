@@ -1,0 +1,266 @@
+<div
+  class="edp-modal"
+  [class.edp-block]="isVisible"
+  style="background: #00000073; overflow: hidden"
+>
+  <div
+    class="edp-row edp-modal-dialog edp-modal-xl"
+    style="
+      max-width: 98%;
+      background: white;
+      border-radius: 20px;
+      height: 95%;
+      margin: 1rem auto;
+    "
+  >
+    <div
+      class="edp-modal-content"
+      style="border-radius: 20px; height: 100%; overflow: hidden"
+    >
+      <div class="edp-modal-header edp-py-2">
+        <h5
+          class="edp-modal-title edp-h5"
+          style="font-weight: bold; font-size: 26px"
+        >
+          {{ eventName }}
+        </h5>
+        <button type="button" class="edp-close" (click)="close()">
+          <i class="fa fa-times" style="font-size: 3rem"></i>
+        </button>
+      </div>
+      <div
+        class="edp-modal-body edp-p-4"
+        style="
+          height: calc(100% - 60px);
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        "
+      >
+        <div
+          class="edp-table-responsive"
+          style="flex: 1; overflow-y: auto; min-height: 0"
+        >
+          <table
+            class="edp-table edp-table-striped edp-table-sm"
+            style="border-radius: 10px; overflow: hidden"
+          >
+            <thead class="edp-table-dark">
+              <tr>
+                <th class="edp-text-nowrap edp-text-center">
+                  Identity Request ID
+                </th>
+                <th class="edp-text-nowrap edp-text-center">Identity Name</th>
+                <th class="edp-text-nowrap edp-text-center">
+                  Identity Display Name
+                </th>
+                <th class="edp-text-nowrap edp-text-center">Requester</th>
+                <th class="edp-text-nowrap edp-text-center">
+                  Identity Request Status
+                </th>
+                <th class="edp-text-nowrap edp-text-center">
+                  Task Result Name
+                </th>
+                <th class="edp-text-nowrap edp-text-center">
+                  Task Result Status
+                </th>
+                <th class="edp-text-nowrap edp-text-center">Created Date</th>
+                <th class="edp-text-nowrap edp-text-center">Completed Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let event of eventData">
+                <td
+                  class="edp-text-nowrap edp-cursor-pointer edp-text-center"
+                  (click)="openIdentityRequest(event.identityRequestId)"
+                  style="text-decoration: underline"
+                >
+                  {{ event.identityRequestId }}
+                </td>
+                <td
+                  class="edp-text-nowrap edp-text-center"
+                  [class.cursor-pointer]="event.targetName"
+                  (click)="event.targetName && openIdentity(event.targetId)"
+                  [style]="
+                    event.targetName
+                      ? 'cursor: pointer; text-decoration: underline'
+                      : ''
+                  "
+                >
+                  {{ event.targetName }}
+                </td>
+                <td class="edp-text-nowrap edp-text-center">
+                  {{ event.targetDisplayName }}
+                </td>
+                <td
+                  class="edp-text-nowrap edp-text-center"
+                  [class.cursor-pointer]="event.requesterDisplayName"
+                  (click)="
+                    event.requesterDisplayName &&
+                      openIdentity(event.requesterId)
+                  "
+                  [style]="
+                    event.requesterDisplayName
+                      ? 'cursor: pointer; text-decoration: underline'
+                      : ''
+                  "
+                >
+                  {{ event.requesterDisplayName }}
+                </td>
+                <td class="edp-text-nowrap edp-text-center">
+                  <span
+                    [ngClass]="{
+                      successStatus:
+                        event.identityRequestCompletionStatusString ===
+                        'Success',
+                      pendingStatus:
+                        event.identityRequestCompletionStatusString ===
+                          'Pending' ||
+                        event.identityRequestCompletionStatusString ===
+                          'Incomplete',
+                      failedStatus:
+                        event.identityRequestCompletionStatusString ===
+                        'Failure'
+                    }"
+                    >{{ event.identityRequestCompletionStatusString }}</span
+                  >
+                </td>
+                <td class="edp-text-nowrap edp-text-center">
+                  {{ event.taskResultName }}
+                </td>
+                <td class="edp-text-nowrap edp-text-center">
+                  <span
+                    [ngClass]="{
+                      successStatus: event.taskResultStatus === 'Success',
+                      pendingStatus:
+                        event.taskResultStatus === 'Warning' ||
+                        event.taskResultStatus === 'Terminated' ||
+                        event.taskResultStatus === 'Running',
+                      failedStatus: event.taskResultStatus === 'Error'
+                    }"
+                    >{{ event.taskResultStatus }}</span
+                  >
+                </td>
+                <td class="edp-text-nowrap edp-text-center">
+                  {{ event.createdDate }}
+                </td>
+                <td class="edp-text-nowrap edp-text-center">
+                  {{ event.endDate }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="edp-mt-4 edp-d-flex edp-justify-content-between edp-align-items-center"
+          style="font-size: 2.25rem"
+        >
+          <div class="edp-d-flex edp-gap-3 edp-align-items-start">
+            <div style="display: flex">
+              <label for="pageLimit" class="edp-form-label"
+                >Results per Page</label
+              >
+              <select
+                id="pageLimit"
+                class="edp-form-control"
+                [(ngModel)]="pageLimit"
+                style="width: auto; margin-left: 20px; font-size: 2.25rem"
+              >
+                <option [value]="2">2</option>
+                <option [value]="15">15</option>
+                <option [value]="30">30</option>
+                <option [value]="50">50</option>
+                <option [value]="80">80</option>
+                <option [value]="100">100</option>
+              </select>
+            </div>
+            <div style="display: flex; margin-left: 20px">
+              <label for="dateFilter" class="edp-form-label">Date Range</label>
+              <select
+                id="dateFilter"
+                class="edp-form-control"
+                [(ngModel)]="dateFilter"
+                (change)="onDateFilterChange()"
+                style="width: auto; margin-left: 20px; font-size: 2.25rem"
+              >
+                <option value="today">Today</option>
+                <option value="yesterday">From Yesterday</option>
+                <option value="last4days">In Last 4 Days</option>
+                <option value="last7days">In Last 7 Days</option>
+                <option value="custom">Custom</option>
+                <option value="all">All</option>
+              </select>
+            </div>
+            <div *ngIf="dateFilter === 'custom'" class="edp-d-flex edp-gap-2">
+              <div style="display: flex; margin-left: 20px">
+                <label for="startDate" class="edp-form-label">Start Date</label>
+                <input
+                  id="startDate"
+                  type="date"
+                  class="edp-form-control"
+                  [(ngModel)]="startDate"
+                  style="width: auto; margin-left: 20px; font-size: 2.25rem"
+                />
+              </div>
+              <div style="display: flex; margin-left: 20px">
+                <label for="endDate" class="edp-form-label">End Date</label>
+                <input
+                  id="endDate"
+                  type="date"
+                  class="edp-form-control"
+                  [(ngModel)]="endDate"
+                  style="width: auto; margin-left: 20px; font-size: 2.25rem"
+                />
+              </div>
+            </div>
+            <button
+              class="edp-btn edp-btn-primary"
+              (click)="applyFilters()"
+              style="margin-left: 20px; font-size: 2.25rem; border-radius: 10px"
+            >
+              <i class="fa-solid fa-magnifying-glass"></i>
+              Filter
+            </button>
+            <button
+              class="edp-btn edp-btn-success"
+              (click)="downloadEvents()"
+              [disabled]="isDownloading"
+              style="margin-left: 20px; font-size: 2.25rem; border-radius: 10px"
+            >
+              <i *ngIf="!isDownloading" class="fa-solid fa-file-arrow-down"></i>
+              <i
+                *ngIf="isDownloading"
+                class="fa fa-spin fa-solid fa-rotate"
+              ></i>
+              {{ isDownloading ? "Downloading..." : "Download CSV" }}
+            </button>
+          </div>
+          <div class="edp-d-flex edp-gap-2">
+            <button
+              class="edp-btn edp-btn-secondary"
+              [disabled]="pageNumber === 1"
+              (click)="previousPage()"
+              style="
+                margin-right: 20px;
+                font-size: 2.25rem;
+                border-radius: 10px;
+              "
+            >
+              <i class="fa-solid fa-angles-left"></i>
+              Previous
+            </button>
+            <button
+              class="edp-btn edp-btn-secondary"
+              [disabled]="!hasMorePages"
+              (click)="nextPage()"
+              style="font-size: 2.25rem; border-radius: 10px"
+            >
+              <i class="fa-solid fa-angles-right"></i>
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

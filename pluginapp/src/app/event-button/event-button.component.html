@@ -1,0 +1,12 @@
+<button
+  [ngClass]="{
+    'edp-btn-primary': !isSelected && isD(),
+    primaryBtn: !isSelected && !isD(),
+    'edp-btn-danger': isSelected && isD(),
+    secondaryBtn: isSelected && !isD()
+  }"
+  class="edp-btn edp-m-2"
+  (click)="onEventClick()"
+>
+  {{ eventName }}
+</button>

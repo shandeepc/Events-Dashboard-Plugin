@@ -1,0 +1,11 @@
+{
+  "/identityiq": {
+    "target": "http://sp.com:8080",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/identityiq": ""
+    },
+    "logLevel": "debug"
+  }
+}

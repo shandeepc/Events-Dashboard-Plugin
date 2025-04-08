@@ -1,0 +1,42 @@
+.successStatus {
+  background: #cff6dd;
+  color: #1fa750;
+}
+
+.pendingStatus {
+  background: #fdf5dd;
+  color: #cfa00c;
+}
+
+.failedStatus {
+  background: #fddddd;
+  color: #cf0c0c;
+}
+
+.successStatus:after {
+  background: #23bd5a;
+}
+
+.pendingStatus:after {
+  background: #f2be1d;
+}
+
+.failedStatus:after {
+  background: #f21d1d;
+}
+
+span:after {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  width: 10px;
+  height: 10px;
+  content: "";
+  border-radius: 50%;
+}
+
+span {
+  position: relative;
+  border-radius: 30px;
+  padding: 4px 10px 4px 25px;
+}

@@ -1,0 +1,123 @@
+<hr class="edp-w-100 edp-my-4" style="opacity: 0.2; background: #000" />
+<div class="edp-container-fluid edp-mt-4">
+  <h3 class="edp-mb-3 edp-h3" style="font-weight: bold !important">
+    {{ eventName.trim()
+    }}<span class="edp-cursor-pointer" (click)="fullView.show()"
+      ><i class="edp-icon-external-link fullView edp-cursor-pointer"></i
+    ></span>
+  </h3>
+  <div
+    *ngIf="isLoading"
+    class="edp-d-flex edp-flex-column edp-align-items-center edp-my-5"
+  >
+    <i class="fa fa-spin fa-spinner"></i>
+    <span>Loading...</span>
+  </div>
+  <div
+    class="edp-table-responsive"
+    *ngIf="!isLoading"
+    style="border-radius: 10px; overflow: hidden"
+  >
+    <table
+      class="edp-table edp-table-striped edp-table-sm"
+      style="border-radius: 10px; overflow: hidden"
+    >
+      <thead class="edp-table-dark">
+        <tr>
+          <th class="edp-text-nowrap edp-text-center">Identity Request ID</th>
+          <th class="edp-text-nowrap edp-text-center">Identity Name</th>
+          <th class="edp-text-nowrap edp-text-center">Identity Display Name</th>
+          <th class="edp-text-nowrap edp-text-center">Requester</th>
+          <th class="edp-text-nowrap edp-text-center">
+            Identity Request Status
+          </th>
+          <th class="edp-text-nowrap edp-text-center">Task Result Name</th>
+          <th class="edp-text-nowrap edp-text-center">Task Result Status</th>
+          <th class="edp-text-nowrap edp-text-center">Created Date</th>
+          <th class="edp-text-nowrap edp-text-center">Completed Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of eventData">
+          <td
+            class="edp-text-nowrap edp-cursor-pointer edp-text-center"
+            (click)="openIdentityRequest(event.identityRequestId)"
+            style="cursor: pointer; text-decoration: underline"
+          >
+            {{ event.identityRequestId }}
+          </td>
+          <td
+            class="edp-text-nowrap edp-text-center"
+            [class.cursor-pointer]="event.targetName"
+            (click)="event.targetName && openIdentity(event.targetId)"
+            [style]="
+              event.targetName
+                ? 'cursor: pointer; text-decoration: underline'
+                : ''
+            "
+          >
+            {{ event.targetName }}
+          </td>
+          <td class="edp-text-nowrap edp-text-center">
+            {{ event.targetDisplayName }}
+          </td>
+          <td
+            class="edp-text-nowrap edp-text-center"
+            [class.cursor-pointer]="event.requesterDisplayName"
+            (click)="
+              event.requesterDisplayName && openIdentity(event.requesterId)
+            "
+            [style]="
+              event.requesterDisplayName
+                ? 'cursor: pointer; text-decoration: underline'
+                : ''
+            "
+          >
+            {{ event.requesterDisplayName }}
+          </td>
+          <td class="edp-text-nowrap edp-text-center">
+            <span
+              [ngClass]="{
+                successStatus:
+                  event.identityRequestCompletionStatusString === 'Success',
+                pendingStatus:
+                  event.identityRequestCompletionStatusString === 'Pending' ||
+                  event.identityRequestCompletionStatusString === 'Incomplete',
+                failedStatus:
+                  event.identityRequestCompletionStatusString === 'Failure'
+              }"
+              >{{ event.identityRequestCompletionStatusString }}</span
+            >
+          </td>
+          <td class="edp-text-nowrap edp-text-center">
+            {{ event.taskResultName }}
+          </td>
+          <td class="edp-text-nowrap edp-text-center">
+            <span
+              [ngClass]="{
+                successStatus: event.taskResultStatus === 'Success',
+                pendingStatus:
+                  event.taskResultStatus === 'Warning' ||
+                  event.taskResultStatus === 'Terminated' ||
+                  event.taskResultStatus === 'Running',
+                failedStatus: event.taskResultStatus === 'Error'
+              }"
+              >{{ event.taskResultStatus }}</span
+            >
+          </td>
+          <td class="edp-text-nowrap edp-text-center">
+            {{ event.createdDate }}
+          </td>
+          <td class="edp-text-nowrap edp-text-center">
+            {{ event.endDate }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-event-full-view
+    #fullView
+    [eventName]="eventName"
+    [eventData]="eventData"
+  ></app-event-full-view>
+</div>

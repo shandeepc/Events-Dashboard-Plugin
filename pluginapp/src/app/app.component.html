@@ -1,0 +1,31 @@
+<app-header></app-header>
+
+<div class="edp-mt-4">
+  <div class="edp-row edp-justify-content-center">
+    <div class="edp-d-flex edp-flex-wrap edp-justify-content-center edp-gap-4">
+      <app-event-button
+        *ngFor="let event of events"
+        [eventName]="event"
+        [isSelected]="isEventSelected(event)"
+        (eventSelected)="onEventSelected($event)"
+      ></app-event-button>
+    </div>
+  </div>
+</div>
+<div class="edp-container edp-mt-4">
+  <div class="edp-row edp-justify-content-center">
+    <div>
+      <app-event
+        *ngFor="let event of events"
+        [eventName]="event"
+        [eventData]="eventDetails[event]"
+        [isLoading]="isEventLoading(event)"
+        [style.display]="
+          selectedEvent === event || !selectedEvent ? 'block' : 'none'
+        "
+      ></app-event>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

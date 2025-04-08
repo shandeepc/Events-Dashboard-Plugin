@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<sailpoint>
+    <SPRight displayName="Events Dashboard Plugin Access Allow" name="EventsDashboardPluginAccess">
+      <Description>Allow users to use the Events Dashboard Plugin</Description>
+    </SPRight>
+    <Capability displayName="Events Dashboard Plugin Access" name="EventsDashboardPluginAccess">
+        <Description>Provides Access to Events Dashboard</Description>
+        <RightRefs>
+            <Reference class="sailpoint.object.SPRight" name="EventsDashboardPluginAccess"/>
+        </RightRefs>
+    </Capability>
+</sailpoint>

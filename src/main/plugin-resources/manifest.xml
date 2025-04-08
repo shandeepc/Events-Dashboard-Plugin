@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE Plugin PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Plugin displayName="Events Dashboard Plugin" minSystemVersion="8.1" name="EventsDashboardPlugin" rightRequired="" version="1.0">
+  <Attributes>
+    <Map>
+      <entry key="minUpgradableVersion" value="1.0"/>
+      <entry key="fullPage">
+        <value>
+            <FullPage title="Events Dashboard Plugin"/>
+        </value>
+      </entry>
+      <entry key="restResources">
+       <value>
+         <List>
+           <String>dev.shandeep.EventsDashboardPlugin.EventsDashboardPluginRest</String>
+          </List>
+       </value>
+     </entry>
+      <entry key="settings">
+        <value>
+          <List>
+            <Setting dataType="string" multiValue="true" helpText="Select The Life Cycle Events Form The Dropdown To Display In The Dashboard." name="selectedEvents"/>
+          </List>
+        </value>
+      </entry>
+      <entry key="settingsForm">
+        <value>
+          <Form name="Events Dashboard Plugin Configuration">
+            <Attributes>
+              <Map>
+                <entry key="pageTitle" value="Events Dashboard Plugin Configuration"/>
+                <entry key="title" value="Events Dashboard Plugin Configuration"/>
+              </Map>
+            </Attributes>
+            <Description>Form for configuring Events Dashboard Plugin</Description>
+            <Section columns="2" name="Configuration">
+              <Attributes>
+                <Map>
+                  <entry key="subtitle" value="Configure below settings to alter the users experience."/>
+                </Map>
+              </Attributes>
+              <Field displayName="Events To Display" helpKey="Select The Life Cycle Events Form The Dropdown To Display In The Dashboard." multi="true" name="selectedEvents" type="string">
+                <AllowedValuesDefinition>
+                  <Script>
+                    <Source>
+                    <![CDATA[
+                      import sailpoint.object.IdentityRequest;
+                      import sailpoint.object.QueryOptions;
+                      import sailpoint.object.Filter;
+
+                      import java.util.List;
+                      import java.util.Set;
+                      import java.util.TreeSet;
+                      import java.util.ArrayList;
+                      import java.util.Iterator;
+
+                      Set uniqueIdentityRequestTypes = new TreeSet();
+                      QueryOptions identityRequestQueryOptions = new QueryOptions();
+                      identityRequestQueryOptions.setDistinct(true);
+                      identityRequestQueryOptions.addFilter(Filter.notnull("type"));
+                      identityRequestQueryOptions.add(
+                              Filter.or(Filter.eq("targetClass", "Identity"), Filter.eq("targetClass", "sailpoint.object.Identity")));
+
+                      Iterator identityRequestIterator = context.search(IdentityRequest.class, identityRequestQueryOptions, "type");
+
+                      while (identityRequestIterator.hasNext()) {
+                          Object[] objArray = identityRequestIterator.next();
+                          if (objArray.length > 0 && objArray[0] != null) {
+                              uniqueIdentityRequestTypes.add(objArray[0].toString());
+                          }
+                      }
+
+                      //uniqueIdentityRequestTypes.remove("AccessRequest");
+                      //uniqueIdentityRequestTypes.remove("AccountsRequest");
+                      return new ArrayList(uniqueIdentityRequestTypes);
+                    ]]>
+                    </Source>
+                  </Script>
+                </AllowedValuesDefinition>
+              </Field>
+            </Section>
+          </Form>
+        </value>
+      </entry>
+      <entry key="snippets">
+        <value>
+          <List>
+            <Snippet regexPattern=".*" rightRequired="EventsDashboardPluginAccess">
+              <Scripts>
+                <String>ui/js/snippets/EventsDashboardPluginHeader.js</String>
+              </Scripts>
+              <StyleSheets>
+                <String>ui/css/EventsDashboardPlugin.css</String>
+              </StyleSheets>
+            </Snippet>
+          </List>
+        </value>
+      </entry>
+    </Map>
+  </Attributes>
+</Plugin>

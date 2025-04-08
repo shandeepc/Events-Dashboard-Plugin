@@ -37,7 +37,6 @@ import org.apache.commons.logging.LogFactory;
 
 // TO-DO
 // Failed Task Results - Events without Identity Request
-// TaskResult Prune lead to null insert, clears the existing task result
 
 @RequiredRight("EventsDashboardPluginAccess")
 @Path("EventsDashboardPlugin")
@@ -83,8 +82,6 @@ public class EventsDashboardPluginRest extends BasePluginResource {
                 uniqueIdentityRequestTypes.add(objArray[0].toString());
             }
         }
-        // uniqueIdentityRequestTypes.remove("AccessRequest");
-        // uniqueIdentityRequestTypes.remove("AccountsRequest");
 
         returnMap.put("Events", (List<String>) new ArrayList<String>(uniqueIdentityRequestTypes));
         return returnMap;

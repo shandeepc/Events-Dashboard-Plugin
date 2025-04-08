@@ -13,8 +13,8 @@
 ## Installation
 * Simply drag and drop the plugin to install it
  
-![image](https://github.com/user-attachments/assets/a165fe2a-2a41-4d59-983d-9ff3a6dfd384)
-![image](https://github.com/user-attachments/assets/2f975bda-3cd6-45e2-824d-8b511f0a23c9)
+   ![image](https://github.com/user-attachments/assets/a165fe2a-2a41-4d59-983d-9ff3a6dfd384)
+   ![image](https://github.com/user-attachments/assets/2f975bda-3cd6-45e2-824d-8b511f0a23c9)
 
 ## Configuration
 *	By default the dashboard display all events.
@@ -22,28 +22,35 @@
 *	Events To Display - Select the events from dropdown that should be shown in the dashboard.
 *	Click Save button at the bottom to save the configuration.
 
-![image](https://github.com/user-attachments/assets/f83a8603-bbcb-4f3a-b86e-40269bb3626d)
+       ![image](https://github.com/user-attachments/assets/f83a8603-bbcb-4f3a-b86e-40269bb3626d)
+
+## Permisssion
+* Anyone with the **System Administrator** Capability can access the dashboard
+* Dashboard access to any identity can be given by assigning the **Events Dashboard Plugin Access** Capability
+
+     ![image](https://github.com/user-attachments/assets/ce36375c-aa9a-4cd8-9637-a2cc558339f4)
+
 
 
 ## Usage
 *	Navigate to the home page, The Events Dashboard Plugin navigation icon will appear in the top navigation bar
   
-  ![image](https://github.com/user-attachments/assets/ebc014c8-9785-4a98-ba37-5c9ee626425f)
+       ![image](https://github.com/user-attachments/assets/ebc014c8-9785-4a98-ba37-5c9ee626425f)
 
 * Click the icon, The Events Dashboard Plugin Dashboard will open in the new tab.
 
-![image](https://github.com/user-attachments/assets/2e488fd6-2bda-4a5d-afa2-f3613757fd14)
+     ![image](https://github.com/user-attachments/assets/2e488fd6-2bda-4a5d-afa2-f3613757fd14)
 
 1. All the events that are availble in the system, Clicking on each button will hide others except the clicked one
 
-![image](https://github.com/user-attachments/assets/f377e743-79b4-4bcd-9fc1-a061e653f645)
+     ![image](https://github.com/user-attachments/assets/f377e743-79b4-4bcd-9fc1-a061e653f645)
 
 2. Always shows the recent 15 events
   * Clicking the Identity Request ID, Identity Name & Requester will navigate you to the repective page in a new tab
    
-4. Click the expand button to expand a particular event into fullscreen.
+3. Click the expand button to expand a particular event into fullscreen.
    
-![image](https://github.com/user-attachments/assets/db4d9885-95f9-41de-8def-672f806098b6)
+     ![image](https://github.com/user-attachments/assets/db4d9885-95f9-41de-8def-672f806098b6)
 
   * Clicking the Identity Request ID, Identity Name & Requester will navigate you to the repective page in a new tab
   * In the fullscreen view using the **Results per Page**, **Date Range** and the **Filter** button to search and **Previous** & **Next** buttons to navigate.
